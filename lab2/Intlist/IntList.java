@@ -101,20 +101,27 @@ public class IntList {
      */
     public static IntList catenate(IntList A, IntList B) {
         //TODO:  fill in method
-        IntList res=new IntList(A.first,null);
-        IntList p=res;   //res points to the first node of the new list
-        A=A.rest;
-        while(A!=null){
-            p.rest=new IntList(A.first,null);
-            A=A.rest;
-            p=p.rest;
+        if(A==null){
+            return B;
         }
-        while(B!=null){
-            p.rest=new IntList(B.first,null);
-            p=p.rest;
-            B=B.rest;
+        if(A.rest==null){
+            return new IntList(A.first,B);
         }
-        return res;
+        return new IntList(A.first,catenate(A.rest,B));
+//        IntList res = new IntList(A.first, null);
+//        IntList p = res;   //res points to the first node of the new list
+//        A = A.rest;
+//        while (A != null) {
+//            p.rest = new IntList(A.first, null);
+//            A = A.rest;
+//            p = p.rest;
+//        }
+//        while(B!=null){
+//            p.rest=new IntList(B.first,null);
+//            p=p.rest;
+//            B=B.rest;
+//        }
+//        return res;
     }
 
 
