@@ -168,8 +168,8 @@ public class ArrayDeque<T> {
         if ((length / size) > 4) {
             shrink();
         }
-        T result = items[tailsentinel];
         tailsentinel = back(tailsentinel);
+        T result = items[tailsentinel];
         size -= 1;
         return result;
     }
