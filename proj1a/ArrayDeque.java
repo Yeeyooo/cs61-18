@@ -145,12 +145,4 @@ public class ArrayDeque<T> {
         }
         return items[iter];
     }
-    public static void main(String[] args){
-        ArrayDeque<Integer> L = new ArrayDeque<>();
-        L.addFirst(1);
-        L.addLast(2);
-        L.addLast(3);
-        L.addFirst(40);
-        L.printDeque();
-    }
 }
