@@ -1,134 +1,171 @@
-//import javax.lang.model.type.ArrayType;
-
+/** Second part of project1a.
+ * Array implementation.
+ * @author yeahooooo.
+ */
 public class ArrayDeque<T> {
-
+    /** Main data structure for this implementation.*/
     private T[] items;
 
-    /**The size of the Deque.*/
+    /** The size of the Deque.*/
     private int size;
 
     /**The length of the array.*/
     private int length;
+    /** the first node in the array.*/
     private int headsentinel;
+    /** the last node int the array.*/
     private int tailsentinel;
+
+    /** Constructor.*/
     public ArrayDeque() {
-        items = (T[])new Object[8];
+        items = (T[]) new Object[8];
         size = 0;
         headsentinel = 4;
         tailsentinel = 4;
         length = 8;
     }
-    public int advance(int index,int module) {
+    /** advance the certain pointer.
+     * @param index certain index
+     * @param module module.
+     * @return the advance result
+     */
+    private int advance(int index, int module) {
         index %= module;
-        if(index == module-1) {
+        if (index == module - 1) {
             return 0;
         }
-        return index+1;
+        return index + 1;
 
     }
-    public int back(int index) {
-        if(index == 0) {
+
+    /** decrement the certain pointer.
+     * @param index  index
+     * @return  the back result
+     */
+    private int back(int index) {
+        if (index == 0) {
             return length - 1;
         }
-        return index-1;
+        return index - 1;
 
     }
 
-
-    public void grow() {
-        T[] newarray = (T[])new Object[length*2];
+    /**
+     *  Make the length of the array larger.
+     */
+    private void grow() {
+        T[] newarray = (T[]) new Object[length * 2];
         int ptr1 = headsentinel;
         int ptr2 = length;
-        while(ptr1 != tailsentinel) {
+        while (ptr1 != tailsentinel) {
             newarray[ptr2] = items[ptr1];
-            ptr1 = advance(ptr1,length);
-            ptr2 = advance(ptr2,length*2);
+            ptr1 = advance(ptr1, length);
+            ptr2 = advance(ptr2, length * 2);
         }
         items = newarray;
         headsentinel = length;
         tailsentinel = ptr2;
-        length*=2;
+        length *= 2;
 
     }
-
-    public void shrink() {
-        T[] newarray = (T[])new Object[length/2];
+    /** reduce the length of the array.*/
+    private void shrink() {
+        T[] newarray = (T[]) new Object[length / 2];
         int ptr1 = headsentinel;
-        int ptr2 = length/4;
-        while(ptr1 != tailsentinel) {
+        int ptr2 = length / 4;
+        while (ptr1 != tailsentinel) {
             newarray[ptr2] = items[ptr1];
-            ptr1 = advance(ptr1,length);
-            ptr2 = advance(ptr2,length/2);
+            ptr1 = advance(ptr1, length);
+            ptr2 = advance(ptr2, length / 2);
         }
         items = newarray;
-        headsentinel = length/4;
+        headsentinel = length / 4;
         tailsentinel = ptr2;
         length /= 2;
 
     }
+
+    /**
+     * add the item to the head of the array.
+     * @param item item to be inserted
+     */
     public void addFirst(T item) {
-        if(size == length) {
+        if (size == length) {
             grow();
         }
-        if(size == 0) {
-            items[headsentinel] = item;
-            size += 1;
-        }
-        else {
-            headsentinel = back(headsentinel);
-            items[headsentinel] = item;
-            size+=1;
-        }
+        headsentinel = back(headsentinel);
+        items[headsentinel] = item;
+        size += 1;
 
     }
+
+    /**
+     * add the item to the tail of the array.
+     * @param item item to be inserted
+     */
     public void addLast(T item) {
-        if(size == length) {
+        if (size == length) {
             grow();
         }
-        if(size == 0) {
-            items[tailsentinel] = item;
-            size += 1;
-        }
-        else {
-            tailsentinel = advance(tailsentinel,length);
-            items[tailsentinel] = item;
-            size += 1;
-        }
+        items[tailsentinel] = item;
+        tailsentinel = advance(tailsentinel, length);
+        size += 1;
 
     }
+
+    /**
+     * decide if the Deque is empty.
+     * @return true if the Deque is empty,else false.
+     */
     public boolean isEmpty() {
         return size == 0;
     }
 
+    /** return the size of the deque.
+     * @return  the size of the deque
+     */
     public int size() {
         return size;
     }
+
+    /** print the whole deque.*/
     public void printDeque() {
-        if(size == 0)
+        if (size == 0) {
             return;
-        int iter = headsentinel;
-        while(iter != tailsentinel) {
-            System.out.print(items[iter]+" ");
-            iter = advance(iter,length);
         }
-        System.out.print(items[iter]+" ");
+        int iter = headsentinel;
+        while (iter != tailsentinel) {
+            System.out.print(items[iter] + " ");
+            iter = advance(iter, length);
+        }
     }
+
+    /**
+     * remove the first node in the deque.
+     * @return  the remove item.
+     */
     public T removeFirst() {
-        if(size == 0) {
+        if (size == 0) {
             return null;
         }
-        if((length/size)>4) {
+        if ((length / size) > 4) {
             shrink();
         }
         T result = items[headsentinel];
-        headsentinel = advance(headsentinel,length);
+        headsentinel = advance(headsentinel, length);
         size -= 1;
         return result;
     }
+
+    /**
+     *  remove the last node in the deque.
+     * @return the removed item.
+     */
     public T removeLast() {
-        if(size == 0)
+        if (size == 0) {
             return null;
-        if((length/size)>4) {
+        }
+        if ((length / size) > 4) {
             shrink();
         }
         T result = items[tailsentinel];
@@ -136,13 +173,22 @@ public class ArrayDeque<T> {
         size -= 1;
         return result;
     }
+
+    /**
+     * get the ith item.
+     * @param index index
+     * @return the item we want
+     */
     public T get(int index) {
-        if(size==0||(index<0||index>items.length-1))
+        if (size == 0 || index < 0 || index >= size) {
             return null;
+        }
         int iter = headsentinel;
-        while(index > 0) {
-            iter = advance(iter,length);
+        while (index > 0) {
+            iter = advance(iter, length);
+            index -= 1;
         }
         return items[iter];
     }
+
 }
