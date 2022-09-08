@@ -144,13 +144,6 @@ public class ArrayDeque<T> {
             iter = advance(iter,length);
         }
         return items[iter];
-//        if((tailsentinel<=headsentinel&&index>=tailsentinel&&index<=headsentinel)||
-//                (headsentinel>=tailsentinel&&index>=headsentinel&&index<=tailsentinel)) {
-//            return items[index];
-//        }
-//        else {
-//            return null;
-//        }
     }
     public static void main(String[] args){
         ArrayDeque<Integer> L = new ArrayDeque<>();
