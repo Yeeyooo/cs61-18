@@ -6,6 +6,7 @@ public class ArrayDequeTest {
             return false;
         }
         return true;
+
     }
 
     /* Utility method for printing out empty checks. */
@@ -15,6 +16,7 @@ public class ArrayDequeTest {
             return false;
         }
         return true;
+
     }
 
     /* Prints a nice message based on whether a test passed.
@@ -25,6 +27,7 @@ public class ArrayDequeTest {
         } else {
             System.out.println("Test failed!\n");
         }
+
     }
 
     /** Adds a few things to the list, checking isEmpty() and size() are correct,
@@ -82,5 +85,6 @@ public class ArrayDequeTest {
         System.out.println("Running tests.\n");
         addIsEmptySizeTest();
         addRemoveTest();
+
     }
 }

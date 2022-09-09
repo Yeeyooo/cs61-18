@@ -148,7 +148,7 @@ public class ArrayDeque<T> {
         if (size == 0) {
             return null;
         }
-        if ((length / size) > 4) {
+        if ((length / size) >= 4 && length >= 16) {
             shrink();
         }
         T result = items[headsentinel];
@@ -165,13 +165,12 @@ public class ArrayDeque<T> {
         if (size == 0) {
             return null;
         }
-        if ((length / size) > 4) {
+        if ((length / size) > 4 && length >=16) {
             shrink();
         }
         tailsentinel = back(tailsentinel);
-        T result = items[tailsentinel];
         size -= 1;
-        return result;
+        return items[tailsentinel];
     }
 
     /**
@@ -180,13 +179,12 @@ public class ArrayDeque<T> {
      * @return the item we want
      */
     public T get(int index) {
-        if (size == 0 || index < 0 || index >= size) {
+        if (index < 0 || index >= size) {
             return null;
         }
         int iter = headsentinel;
-        while (index > 0) {
+        for(int i = 0;i < index; i++) {
             iter = advance(iter, length);
-            index -= 1;
         }
         return items[iter];
     }

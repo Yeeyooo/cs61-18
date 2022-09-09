@@ -8,6 +8,7 @@ public class LinkedListDequeTest {
 			return false;
 		}
 		return true;
+
 	}
 
 	/* Utility method for printing out empty checks. */
@@ -17,6 +18,7 @@ public class LinkedListDequeTest {
 			return false;
 		}
 		return true;
+
 	}
 
 	/* Prints a nice message based on whether a test passed. 
@@ -27,6 +29,7 @@ public class LinkedListDequeTest {
 		} else {
 			System.out.println("Test failed!\n");
 		}
+
 	}
 
 	/** Adds a few things to the list, checking isEmpty() and size() are correct, 
@@ -87,5 +90,6 @@ public class LinkedListDequeTest {
 		System.out.println("Running tests.\n");
 		addIsEmptySizeTest();
 		addRemoveTest();
+
 	}
 } 
