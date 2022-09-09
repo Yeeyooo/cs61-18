@@ -90,7 +90,7 @@ public class ArrayDeque<T> {
      * @param item item to be inserted
      */
     public void addFirst(T item) {
-        if (size == length) {
+        if (size == length - 1) {
             grow();
         }
         headsentinel = back(headsentinel);
@@ -104,7 +104,7 @@ public class ArrayDeque<T> {
      * @param item item to be inserted
      */
     public void addLast(T item) {
-        if (size == length) {
+        if (size == length - 1) {
             grow();
         }
         items[tailsentinel] = item;
@@ -165,7 +165,7 @@ public class ArrayDeque<T> {
         if (size == 0) {
             return null;
         }
-        if ((length / size) > 4 && length >=16) {
+        if ((length / size) > 4 && length >= 16) {
             shrink();
         }
         tailsentinel = back(tailsentinel);
@@ -183,7 +183,7 @@ public class ArrayDeque<T> {
             return null;
         }
         int iter = headsentinel;
-        for(int i = 0;i < index; i++) {
+        for (int i = 0; i < index; i++) {
             iter = advance(iter, length);
         }
         return items[iter];
