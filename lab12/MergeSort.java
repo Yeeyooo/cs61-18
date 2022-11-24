@@ -35,11 +35,8 @@ public class MergeSort {
     private static <Item extends Comparable> Queue<Queue<Item>>
             makeSingleItemQueues(Queue<Item> items) {
         Queue<Queue<Item>> result = new Queue<>();
-        for (int i = 0; i < items.size(); i++) {
-            Item q = items.dequeue();
+        for (Item q : items) {
             Queue<Item> single = new Queue<>();
-            items.enqueue(q);
-
             single.enqueue(q);
             result.enqueue(single);
         }
@@ -63,7 +60,7 @@ public class MergeSort {
             Queue<Item> q1, Queue<Item> q2) {
         Queue<Item> result = new Queue<>();
         while (!q1.isEmpty() || !q2.isEmpty()) {
-            Item smaller = MergeSort.getMin(q1, q2);
+            Item smaller = getMin(q1, q2);
             result.enqueue(smaller);
         }
         return result;
@@ -72,6 +69,9 @@ public class MergeSort {
     /** Returns a Queue that contains the given items sorted from least to greatest. */
     public static <Item extends Comparable> Queue<Item> mergeSort(
             Queue<Item> items) {
+        if (items.size() <= 1) {
+            return items;
+        }
         Queue<Queue<Item>> qoq = makeSingleItemQueues(items);
         while (qoq.size() > 1) {
             Queue<Item> q1 = qoq.dequeue();
