@@ -3,7 +3,6 @@ import edu.princeton.cs.algs4.Queue;
 public class QuickSort {
     /**
      * Returns a new queue that contains the given queues catenated together.
-     *
      * The items in q2 will be catenated after all of the items in q1.
      */
     private static <Item extends Comparable> Queue<Item> catenate(Queue<Item> q1, Queue<Item> q2) {
@@ -48,12 +47,50 @@ public class QuickSort {
             Queue<Item> unsorted, Item pivot,
             Queue<Item> less, Queue<Item> equal, Queue<Item> greater) {
         // Your code here!
+        for (Item item : unsorted) {
+            if (item.compareTo(pivot) < 0) {
+                less.enqueue(item);
+            }
+            else if (item.compareTo(pivot) > 0) {
+                greater.enqueue(item);
+            }
+            else {
+                equal.enqueue(item);
+            }
+        }
     }
 
     /** Returns a Queue that contains the given items sorted from least to greatest. */
     public static <Item extends Comparable> Queue<Item> quickSort(
             Queue<Item> items) {
         // Your code here!
-        return items;
+        Queue<Item> less = new Queue<>();
+        Queue<Item> equal = new Queue<>();
+        Queue<Item> greater = new Queue<>();
+        Item pivot = getRandomItem(items);
+        partition(items, pivot, less, equal, greater);
+        if (!less.isEmpty()) {
+            less = quickSort(less);
+        }
+        if (!greater.isEmpty()) {
+            greater = quickSort(greater);
+        }
+        return catenate(catenate(less, equal), greater);
+    }
+
+    /** Test driven main function.
+     * @param args command line arguments
+     */
+    public static void main(String[] args) {
+        Queue<String> students = new Queue<>();
+        students.enqueue("Queenie");
+        students.enqueue("Alice");
+        students.enqueue("Credence");
+        students.enqueue("Newrt");
+        students.enqueue("Lucia");
+        students.enqueue("Bob");
+        Queue<String> sortedStudents = QuickSort.quickSort(students);
+        System.out.println(students);
+        System.out.println(sortedStudents);
     }
 }
