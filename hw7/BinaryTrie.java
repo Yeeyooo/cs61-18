@@ -1,4 +1,3 @@
-import edu.princeton.cs.algs4.BinaryStdOut;
 import edu.princeton.cs.algs4.MinPQ;
 import java.io.Serializable;
 import java.util.HashMap;
@@ -66,12 +65,10 @@ public class BinaryTrie implements Serializable {
         for (int i = 0; i < querySequence.length(); i++) {
             if (node.isLeaf()) {
                 return new Match(new BitSequence(querySequence.firstNBits(i)), node.ch);
-            }
-            else {
+            } else {
                 if (querySequence.bitAt(i) == 0) {
                     node = node.left;
-                }
-                else {
+                } else {
                     node = node.right;
                 }
             }

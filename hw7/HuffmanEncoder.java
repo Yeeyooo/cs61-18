@@ -15,9 +15,8 @@ public class HuffmanEncoder {
         for (char ch : inputSymbols) {
             if (!frequencyTable.containsKey(ch)) {
                 frequencyTable.put(ch, 1);
-            }
-            else {
-                frequencyTable.computeIfPresent(ch, (key, oldValue) -> oldValue + 1);
+            } else {
+                frequencyTable.put(ch, frequencyTable.get(ch) + 1);
             }
         }
         return frequencyTable;
