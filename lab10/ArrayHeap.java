@@ -1,4 +1,7 @@
 import org.junit.Test;
+
+import java.util.NoSuchElementException;
+
 import static org.junit.Assert.*;
 
 /**
@@ -131,17 +134,12 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
         if (!inBounds(index)) {
             throw new IllegalArgumentException("The index is invalid");
         }
-        while (2 * index <= size) {
-            int j = leftIndex(index);
-            if (j < size && min(j, j + 1) == j + 1) {
-                j++;
-            }
-            if (min(index, j) == index) {
-                break;
-            }
-            swap(index, j);
-            index = j;
+        int minChild = min(leftIndex(index), rightIndex(index));
+        if (min(index, minChild) == minChild) {
+            swap(index, minChild);
+            sink(minChild);
         }
+        return;
     }
 
     /**
@@ -168,6 +166,9 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
     @Override
     public T peek() {
         /* TODO: Your code here! */
+        if (size == 0) {
+            throw new NoSuchElementException("heap is empty");
+        }
         return contents[1].item();
     }
 
@@ -223,6 +224,7 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
         contents[index].myPriority = priority;
         swim(index);
         sink(index);
+        return;
     }
 
     /**
