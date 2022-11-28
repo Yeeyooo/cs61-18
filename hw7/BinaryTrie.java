@@ -96,8 +96,7 @@ public class BinaryTrie implements Serializable {
         if (!x.isLeaf()) {
             buildTable(lookupTable, x.left, s + '0');
             buildTable(lookupTable, x.right, s + '1');
-        }
-        else {
+        } else {
             lookupTable.put(x.ch, new BitSequence(s));
         }
     }
