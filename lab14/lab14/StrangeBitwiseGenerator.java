@@ -7,10 +7,18 @@ public class StrangeBitwiseGenerator implements Generator {
 
     private int state;
 
+    /**
+     * class constructor.
+     * @param period period
+     */
     public StrangeBitwiseGenerator (int period) {
         this.state = 0;
         this.period = period;
     }
+
+    /** interface method.
+     * @return a strange state
+     */
     public double next() {
         state += 1;
         int weirdState = state & (state >>> 3) % period;
@@ -18,6 +26,11 @@ public class StrangeBitwiseGenerator implements Generator {
         return normalize(moreWeirdState % period);
     }
 
+    /**
+     * helper method.
+     * @param value value to be normalized
+     * @return normalized value
+     */
     private double normalize(int value) {
         return -1 + (double)(2 * value) / (period - 1);
     }
