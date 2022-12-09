@@ -5,6 +5,9 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import lab9.BSTMap;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Tests by Brendan Hu, Spring 2015, revised for 2018 by Josh Hug
  */
@@ -84,6 +87,44 @@ public class TestBSTMap {
         b.put("hi", 1);
         assertTrue(b.containsKey("hi"));
         assertTrue(b.get("hi") != null);
+    }
+
+    //assumes put works
+    @Test
+    public void sanityKeySetTest() {
+        BSTMap<String, Integer> b = new BSTMap<>();
+        Set<String> keys = new HashSet<>();
+        for (int i = 0; i < 300; i++) {
+            b.put("Gooood" + i, i + 2);
+            keys.add("Gooood" + i);
+        }
+        assertEquals(keys, b.keySet());
+    }
+
+    //assumes put/keySet work
+    @Test
+    public void sanityremoveTest() {
+        BSTMap<String, Integer> bst = new BSTMap<>();
+        bst.put("Goood1", 1);
+        bst.put("NotGood", 2);
+        bst.put("Yeep", 3);
+        bst.put("apple", 4);
+        bst.put("brother", 5);
+        Set<String> keys = new HashSet<>();
+        keys.add("Goood1");
+        keys.add("NotGood");
+        keys.add("Yeep");
+        keys.add("apple");
+        keys.add("brother");
+        assertEquals(keys, bst.keySet());
+
+        bst.remove("Yeep");
+        Set<String> keys2 = new HashSet<>();
+        keys2.add("Goood1");
+        keys2.add("NotGood");
+        keys2.add("apple");
+        keys2.add("brother");
+        assertEquals(keys2, bst.keySet());
     }
 
     public static void main(String[] args) {
