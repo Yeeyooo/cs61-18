@@ -146,9 +146,6 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         if (key == null) {
             throw new IllegalArgumentException();
         }
-        if (get(key) == null) {
-            return null;
-        }
         V result = get(key);
         root = removeHelper(root, key);
         return result;
@@ -172,24 +169,30 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
             if (p.right == null) {
                 return p.left;
             }
-            Node pre = p.right;
-            Node t = pre.left;
-            while (t.left != null) {
-                pre = t;
-                t = t.left;
-            }
-            K tmp1 = p.key;
-            p.key = t.key;
-            t.key = tmp1;
-            V tmp2 = p.value;
-            p.value = t.value;
-            t.value = tmp2;
-
-            pre.left = p.right;
+            Node t = p;
+            p = min(t.right);
+            p.right = deleteMin(t.right);
+            p.left = t.left;
         }
         return p;
     }
 
+    private Node min(Node x) {
+        if (x.left == null) {
+            return x;
+        }
+        else {
+            return min(x.left);
+        }
+    }
+
+    private Node deleteMin(Node x) {
+        if (x.left == null) {
+            return x.right;
+        }
+        x.left = deleteMin(x.left);
+        return x;
+    }
     /** Removes the key-value entry for the specified key only if it is
      *  currently mapped to the specified value.  Returns the VALUE removed,
      *  null on failed removal.
