@@ -38,7 +38,7 @@ public class RadixSort {
             StringBuilder newstring = new StringBuilder(string);
             if (string.length() < maxminium) {
                 for (int i = 0; i < maxminium - string.length(); i++) {
-                    newstring.append("0");
+                    newstring.append((char) 0);
                 }
             }
             result[k++] = newstring.toString();
@@ -51,7 +51,7 @@ public class RadixSort {
         int k = 0;
         for (String string : afterAppend) {
             StringBuilder newstring = new StringBuilder(string);
-            for (int i = newstring.length() - 1; i >= 0 && newstring.charAt(i) == '0'; i--) {
+            for (int i = newstring.length() - 1; i >= 0 && newstring.charAt(i) == (char) 0; i--) {
                 newstring.deleteCharAt(i);
             }
             result[k++] = newstring.toString();
@@ -68,19 +68,26 @@ public class RadixSort {
      */
     private static void sortHelperLSD(String[] asciis, int index) {
         // Optional LSD helper method for required LSD radix sort
-        int[] count = new int[256 + 1];
-        String[] aux = new String[asciis.length];
-        for (int i = 0; i < asciis.length; i++) {
-            count[asciis[i].charAt(index) + 1]++;
+        int[] counts = new int[256];
+        for (String s : asciis) {
+            counts[(int) s.charAt(index)]++;
         }
-        for (int r = 0; r < 256; r++) {
-            count[r + 1] += count[r];
+        int[] starts = new int[256];
+        int startIndex = 1;
+        starts[0] = 0;
+        for (int i = 0; i < counts.length - 1; i++) {
+            starts[startIndex] = starts[startIndex - 1] + counts[i];
+            startIndex++;
         }
+        String[] sorted = new String[asciis.length];
         for (int i = 0; i < asciis.length; i++) {
-            aux[count[asciis[i].charAt(index)]++] = asciis[i];
+            int pos = starts[(int) asciis[i].charAt(index)];
+//            System.out.println(asciis[i].charAt(index) + ": " + pos);
+            sorted[pos] = asciis[i];
+            starts[(int) asciis[i].charAt(index)]++;
         }
-        for (int i = 0; i < asciis.length; i++) {
-            asciis[i] = aux[i];
+        for (int i = 0; i < sorted.length; i++) {
+            asciis[i] = sorted[i];
         }
     }
 

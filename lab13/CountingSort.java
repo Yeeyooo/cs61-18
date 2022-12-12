@@ -78,8 +78,7 @@ public class CountingSort {
         for (int i : arr) {
             if (i >= 0) {
                 counts[i]++;
-            }
-            else {
+            } else {
                 counts[max + Math.abs(i)]++;
             }
         }
