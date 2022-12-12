@@ -17,8 +17,48 @@ public class RadixSort {
      */
     public static String[] sort(String[] asciis) {
         // TODO: Implement LSD Sort
-        return null;
+        if (asciis.length == 0 || asciis.length == 1) {
+            return asciis;
+        }
+        int maxminium = 0;
+        for (String string : asciis) {
+            maxminium = Math.max(maxminium, string.length());
+        }
+        String[] afterAppend = appendZero(asciis, maxminium);
+        for (int i = maxminium - 1; i >= 0; i--) {
+            sortHelperLSD(afterAppend, i);
+        }
+        return deleteZero(afterAppend);
     }
+
+    private static String[] appendZero(String[] asciis, int maxminium) {
+        String[] result = new String[asciis.length];
+        int k = 0;
+        for (String string : asciis) {
+            StringBuilder newstring = new StringBuilder(string);
+            if (string.length() < maxminium) {
+                for (int i = 0; i < maxminium - string.length(); i++) {
+                    newstring.append("0");
+                }
+            }
+            result[k++] = newstring.toString();
+        }
+        return result;
+    }
+
+    private static String[] deleteZero(String[] afterAppend) {
+        String[] result = new String[afterAppend.length];
+        int k = 0;
+        for (String string : afterAppend) {
+            StringBuilder newstring = new StringBuilder(string);
+            for (int i = newstring.length() - 1; i >= 0 && newstring.charAt(i) == '0'; i--) {
+                newstring.deleteCharAt(i);
+            }
+            result[k++] = newstring.toString();
+        }
+        return result;
+    }
+
 
     /**
      * LSD helper method that performs a destructive counting sort the array of
@@ -28,7 +68,20 @@ public class RadixSort {
      */
     private static void sortHelperLSD(String[] asciis, int index) {
         // Optional LSD helper method for required LSD radix sort
-        return;
+        int[] count = new int[256 + 1];
+        String[] aux = new String[asciis.length];
+        for (int i = 0; i < asciis.length; i++) {
+            count[asciis[i].charAt(index) + 1]++;
+        }
+        for (int r = 0; r < 256; r++) {
+            count[r + 1] += count[r];
+        }
+        for (int i = 0; i < asciis.length; i++) {
+            aux[count[asciis[i].charAt(index)]++] = asciis[i];
+        }
+        for (int i = 0; i < asciis.length; i++) {
+            asciis[i] = aux[i];
+        }
     }
 
     /**
